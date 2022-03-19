@@ -42,7 +42,6 @@ int main() {
         }
         else if (a.vin().size() > 0)
         {
-            std::cout << a.vin() << '\n';
             if ('A' < a.vin()[0] && a.vin()[0]  < 'F')
             {
                 isTagged = true;
