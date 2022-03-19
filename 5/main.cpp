@@ -42,7 +42,7 @@ int main() {
         }
         else if (a.vin().size() > 0)
         {
-            if ('A' < a.vin()[0] && a.vin()[0]  < 'F')
+            if ('A' <= a.vin()[0] && a.vin()[0]  <= 'F')
             {
                 isTagged = true;
             }
