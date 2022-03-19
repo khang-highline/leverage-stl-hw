@@ -7,19 +7,21 @@
 #include "Car.h"
 
 std::vector<int> createElevationMap();
-int calculateTrappedWater(std::vector<int> range);
+int calculateTrappedWater(const std::vector<int>& myList);
+int calculateTrappedWater2(const std::vector<int>& myList);
 
 int main() {
     auto range = createElevationMap();
     std::cout << "Elevation Map: " << range << "\n";
 
     // TODO: print out the amount of trapped water after it rains
-    std::cout << calculateTrappedWater(range) << "\n";
+    std::cout << "My own implementation from scratch: " << calculateTrappedWater(range) << "\n";
+    std::cout << "Implementation based on available algorithm: " << calculateTrappedWater2(range) << "\n";
 }
 
 // Idea: calculate the drops in each breadth (layer) from top to bottom.
 // use raw for loop.
-int calculateTrappedWater(std::vector<int> myList)
+int calculateTrappedWater(const std::vector<int>& myList)
 {
     int drops = 0;
 
@@ -46,6 +48,23 @@ int calculateTrappedWater(std::vector<int> myList)
     }
 
     return drops;
+}
+
+int calculateTrappedWater2(const std::vector<int>& myList)
+{
+    auto maxIterator = std::max_element(myList.begin(), myList.end());
+
+    std::vector<int> tmpList(myList.size());
+
+    auto maxLambda =  [](auto a, auto b)
+    {
+        return std::max(a, b);
+    };
+
+    std::partial_sum(myList.begin(), maxIterator, tmpList.begin(), maxLambda);
+    std::partial_sum(myList.rbegin(), std::make_reverse_iterator(maxIterator), tmpList.rbegin(), maxLambda);
+
+    return std::inner_product(tmpList.begin(), tmpList.end(), myList.begin(), 0, std::plus<int>(), std::minus<int>()); 
 }
 
 std::vector<int> createElevationMap() {
