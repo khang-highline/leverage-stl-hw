@@ -14,7 +14,7 @@ int main() {
     auto average = std::accumulate(cars.begin(), cars.end(), 0.0, [](double result, const Car& a)
     {
         return result + a.price();
-    });
+    }) / cars.size();
     std::cout << "The average price is: $" << average << "\n";
 
     auto minResult = std::min_element(cars.begin(), cars.end(), [](const Car &a, const Car &b)
